@@ -21,6 +21,9 @@ public class OAuthInfo implements Serializable {
      */
     private String openid;
 
+    /**
+     * 惊喜不
+     */
     private String scope;
 
     public String getAccess_token() {
