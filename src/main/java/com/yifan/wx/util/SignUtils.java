@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 /**
- * 请求校验工具类
+ * 请求校验工具类,校验token
  * @author wuyifan
  * @since 2018年03月03日
  */
