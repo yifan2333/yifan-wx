@@ -14,9 +14,6 @@ public class OAuthInfo implements Serializable {
 
     private String expires_in;
 
-    /**
-     *
-     */
     private String refresh_token;
 
     /**
@@ -24,10 +21,6 @@ public class OAuthInfo implements Serializable {
      */
     private String openid;
 
-    /**
-     * ha ha ha
-     * 惊喜不
-     */
     private String scope;
 
     public String getAccess_token() {
