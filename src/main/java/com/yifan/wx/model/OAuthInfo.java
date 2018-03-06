@@ -16,6 +16,9 @@ public class OAuthInfo implements Serializable {
 
     private String refresh_token;
 
+    /**
+     * 公众号会为每一个用户生成一个openId
+     */
     private String openid;
 
     private String scope;
