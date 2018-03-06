@@ -25,9 +25,9 @@ import javax.validation.ValidationException;
 import java.util.Set;
 
 /**
- * 统一处理请求异常
- * @author wuyifan
- * @since 2018年3月6日
+ * 统一异常处理
+ * @author JE哥
+ * @author yifan
  */
 @ControllerAdvice
 @ResponseBody
