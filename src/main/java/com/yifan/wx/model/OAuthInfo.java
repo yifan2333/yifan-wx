@@ -22,7 +22,7 @@ public class OAuthInfo implements Serializable {
     private String openid;
 
     /**
-     *
+     * ha ha ha
      */
     private String scope;
 
