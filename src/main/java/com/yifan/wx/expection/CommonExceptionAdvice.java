@@ -25,9 +25,9 @@ import javax.validation.ValidationException;
 import java.util.Set;
 
 /**
- * @author JE哥
- * @email 1272434821@qq.com
- * @description:全局异常处理
+ * 统一处理请求异常
+ * @author wuyifan
+ * @since 2018年3月6日
  */
 @ControllerAdvice
 @ResponseBody
@@ -111,6 +111,9 @@ public class CommonExceptionAdvice {
 
   /**
    * 404 - Not Found
+   * 404时，spring-boot并不会抛出异常，而是重定向到error/
+   * 需要application.properties中配置spring.mvc.throw-exception-if-no-handler-found=true（出现错误时, 直接抛出异常）
+   * 和spring.resources.add-mappings=false（不要为我们工程中的资源文件建立映射）
    */
   @ResponseStatus(HttpStatus.NOT_FOUND)
   @ExceptionHandler(value = NoHandlerFoundException.class)

@@ -3,6 +3,7 @@ package com.yifan.wx.model;
 import java.io.Serializable;
 
 /**
+ * 通过code获取的用户信息
  * @author wuyifan
  * @since 2018年03月05日
  */

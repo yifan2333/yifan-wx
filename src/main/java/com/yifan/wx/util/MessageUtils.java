@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 处理微信用户发送的消息请求类
  * @author wuyifan
  * @since 2018年03月04日
  */
@@ -61,8 +62,7 @@ public class MessageUtils {
                                 "<MsgType><![CDATA[text]]></MsgType>" +
                                 "<Content><![CDATA[%s]]></Content>" +
                                 "</xml>",
-                        fromUserName, toUserName, getMessageCreateTime(),
-                        "已收到消息");
+                        fromUserName, toUserName, getMessageCreateTime(), "已收到消息");
 
         return result;
     }
@@ -110,6 +110,13 @@ public class MessageUtils {
     }
 
 
+    /**
+     * 微信返回的消息是一个xml格式，将xml格式转换为map
+     * @param request request
+     * @return java.util.Map
+     * @author wuyifan
+     * @since 2018年3月6日
+     */
     private static Map<String, String> xmlToMap(HttpServletRequest request) {
 
         Map<String, String> map = new HashMap<>();

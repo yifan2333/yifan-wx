@@ -3,6 +3,11 @@ package com.yifan.wx.util;
 import com.yifan.wx.enums.HttpStatus;
 import org.springframework.ui.ModelMap;
 
+/**
+ * ajax请求返回页面的工具类
+ * @author wuyifan
+ * @since 2018年3月6日
+ */
 public class ResultUtils {
 
 	/** 返回状态码 */
