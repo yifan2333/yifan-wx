@@ -14,6 +14,9 @@ public class OAuthInfo implements Serializable {
 
     private String expires_in;
 
+    /**
+     *
+     */
     private String refresh_token;
 
     /**
