@@ -23,6 +23,7 @@ public class OAuthInfo implements Serializable {
 
     /**
      * ha ha ha
+     * 惊喜不
      */
     private String scope;
 
