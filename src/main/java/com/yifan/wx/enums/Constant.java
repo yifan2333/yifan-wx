@@ -1,6 +1,7 @@
 package com.yifan.wx.enums;
 
 /**
+ * 微信开发常量类定义
  * @author wuyifan
  * @since 2018年03月03日
  */
