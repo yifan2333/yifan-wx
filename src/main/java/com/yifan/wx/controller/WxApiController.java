@@ -1,6 +1,7 @@
 package com.yifan.wx.controller;
 
 import com.yifan.wx.model.OAuthInfo;
+import com.yifan.wx.util.CacheUtils;
 import com.yifan.wx.util.MessageUtils;
 import com.yifan.wx.util.SignUtils;
 import com.yifan.wx.util.WxHttpUtils;
@@ -23,9 +24,14 @@ public class WxApiController {
 
     private Logger logger = LoggerFactory.getLogger(WxApiController.class);
 
-    @RequestMapping(value = "check", method = RequestMethod.GET)
-    public String check(HttpServletRequest request) {
+    private volatile static int times = 0;
 
+    @RequestMapping(name = "check", method = RequestMethod.POST)
+    public String check(HttpServletRequest request) {
+        return MessageUtils.handleWeChatMessage(request);
+    }
+
+    private String checkTokenAndGetEchostr(HttpServletRequest request) {
         // 微信加密签名
         String signature = request.getParameter("signature");
         // 随机字符串
@@ -45,30 +51,50 @@ public class WxApiController {
         }
     }
 
-    @RequestMapping(value = "receiveMessage", method = RequestMethod.GET)
-    public String receiveMessage(HttpServletRequest request) {
-        return MessageUtils.handleWeChatMessage(request);
-    }
+    /**
+     * OAuth授权获取用户信息
+     * @param request request
+     * @author wuyifan
+     * @since 2018年3月7日
+     */
+    @RequestMapping(value = "userInfoByOAuth")
+    public void userInfoByCode (HttpServletRequest request) {
 
-    @RequestMapping(value = "code")
-    public void getCode(HttpServletRequest request) {
-        WxHttpUtils.getCode();
-    }
+        logger.info("get userInfo... the times is {} ", ++times);
 
-    @RequestMapping(value = "userInfo")
-    public void userInfo (HttpServletRequest request) {
         String code = request.getParameter("code");
+
+        logger.info("code is {}", code);
 
         if (StringUtils.isBlank(code)) {
             return;
         }
 
-        OAuthInfo oAuthInfo = WxHttpUtils.getOAuthInfo(code);
+        OAuthInfo oAuthInfo = WxHttpUtils.getInstance().getOAuthInfo(code);
 
         if (oAuthInfo == null) {
             return;
         }
 
-        logger.info(WxHttpUtils.getUserInfo(oAuthInfo.getAccess_token(), oAuthInfo.getOpenid()));
+        if (WxHttpUtils.getInstance().checkAccessToken(oAuthInfo.getAccess_token(), oAuthInfo.getOpenid())) {
+            logger.info("the result of get userInfo is {}", WxHttpUtils.getInstance().getUserInfo(CacheUtils.getInstance().getAccessToken(), oAuthInfo.getOpenid()));
+        }
     }
+
+    /**
+     * 获取公众号下所有的用户列表
+     * @return java.lang.String
+     * @author wuyifan
+     * @since 2018年3月7日
+     */
+    @RequestMapping(value = "userList")
+    public String userList() {
+
+        String result = WxHttpUtils.getInstance().userList();
+
+        logger.info(result);
+
+        return result;
+    }
+
 }

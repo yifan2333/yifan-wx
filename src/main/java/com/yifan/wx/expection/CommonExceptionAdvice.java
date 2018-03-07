@@ -51,7 +51,7 @@ public class CommonExceptionAdvice {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ModelMap handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
-    logger.error("参数解析失败", e); 
+    logger.error("参数解析失败", e);
     return ResultUtils.makeModel(HttpStatus.BAD_REQUEST.value(), "could_not_read_json");
   }
 

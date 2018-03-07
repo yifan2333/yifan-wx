@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>code</title>
+</head>
+<body>
+    <button id="my-button">点击授权</button>
+    <input id="codeUrl" type="hidden" th:value="${codeUrl}"/>
+</body>
+<script src="../jquery.js" th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var url = $("#codeUrl").val();
+        console.log(url);
+        $("#my-button").click(function () {
+            location.href = url;
+        });
+    });
+</script>
+</html>

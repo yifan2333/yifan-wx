@@ -1,10 +1,13 @@
 package com.yifan.wx.util;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yifan.wx.enums.MessageType;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +27,8 @@ import java.util.Map;
  */
 public class MessageUtils {
 
+    private static Logger logger = LoggerFactory.getLogger(MessageUtils.class);
+
     public static String handleWeChatMessage(HttpServletRequest request) {
 
         String result = "success";
@@ -42,27 +47,18 @@ public class MessageUtils {
         MessageType messageEnumType = MessageType.valueOf(MessageType.class, messageType.toUpperCase());
 
         switch (messageEnumType){
-            case TEXT: handelTextMessage(map); break;
-            case LINK: handelLinkMessage(map); break;
-            case VIDEO: handelVideoMessage(map); break;
-            case EVENT: handelEventMessage(map); break;
-            case IMAGE: handelImageMessage(map); break;
-            case VOICE: handelVoiceMessage(map); break;
-            case LOCATION: handelLocationMessage(map); break;
-            case SHORT_VIDEO: handelShortVideoMessage(map); break;
+            case TEXT: result = handelTextMessage(map, fromUserName, toUserName); break;
+            case LINK: result = handelLinkMessage(map, fromUserName, toUserName); break;
+            case VIDEO: result = handelVideoMessage(map, fromUserName, toUserName); break;
+            case EVENT: result = handelEventMessage(map, fromUserName, toUserName); break;
+            case IMAGE: result = handelImageMessage(map, fromUserName, toUserName); break;
+            case VOICE: result = handelVoiceMessage(map, fromUserName, toUserName); break;
+            case LOCATION: result = handelLocationMessage(map, fromUserName, toUserName); break;
+            case SHORT_VIDEO: result = handelShortVideoMessage(map, fromUserName, toUserName); break;
             default: return result;
         }
 
-        result = String
-                .format(
-                        "<xml>" +
-                                "<ToUserName><![CDATA[%s]]></ToUserName>" +
-                                "<FromUserName><![CDATA[%s]]></FromUserName>" +
-                                "<CreateTime>%s</CreateTime>" +
-                                "<MsgType><![CDATA[text]]></MsgType>" +
-                                "<Content><![CDATA[%s]]></Content>" +
-                                "</xml>",
-                        fromUserName, toUserName, getMessageCreateTime(), "已收到消息");
+        logger.info("返回的消息：{}", result);
 
         return result;
     }
@@ -84,29 +80,100 @@ public class MessageUtils {
         return String.valueOf(dd);
     }
 
-    private static void handelShortVideoMessage(Map<String, String> map) {
+    /**
+     *
+     * @param map map
+     * @param fromUserName fromUserName
+     * @param toUserName toUserName
+     * @return java.lang.String
+     * @author wuyifan
+     * @since 2018年3月7日
+     */
+    private static String handelShortVideoMessage(Map<String, String> map, String fromUserName, String toUserName) {
+        logger.info("收到的小视频信息：{}", JSONObject.toJSONString(map));
+        return "";
     }
 
-    private static void handelLocationMessage(Map<String, String> map) {
+    private static String handelLocationMessage(Map<String, String> map, String fromUserName, String toUserName) {
+        logger.info("收到的定位信息：{}", JSONObject.toJSONString(map));
+        return "";
     }
 
-    private static void handelVoiceMessage(Map<String, String> map) {
+    private static String handelVoiceMessage(Map<String, String> map, String fromUserName, String toUserName) {
+        logger.info("收到的视频信息：{}", JSONObject.toJSONString(map));
+        return "";
     }
 
-    private static void handelImageMessage(Map<String, String> map) {
+    /**
+     * <xml>
+     *     <ToUserName><![CDATA[toUser]]></ToUserName>
+     *     <FromUserName>< ![CDATA[fromUser] ]></FromUserName>
+     *     <CreateTime>1348831860</CreateTime>
+     *     <MsgType>< ![CDATA[image] ]></MsgType>
+     *     <MediaId>< ![CDATA[media_id] ]></MediaId>
+     * </xml>
+     * @param map map
+     * @param fromUserName fromUserName
+     * @param toUserName toUserName
+     * @return java.lang.String
+     * @author wuyifan
+     * @since 2018年3月7日
+     */
+    private static String handelImageMessage(Map<String, String> map, String fromUserName, String toUserName) {
+        logger.info("收到的图片信息：{}", JSONObject.toJSONString(map));
+        String imageTemplate = "<xml>" +
+                                    "<ToUserName><![CDATA[%s]]></ToUserName> " +
+                                    "<FromUserName>< ![CDATA[%s] ]></FromUserName> " +
+                                    "<CreateTime>%s</CreateTime> " +
+                                    "<MsgType><![CDATA[image]]></MsgType> " +
+                                    "<MediaId><![CDATA[%s]]></MediaId> " +
+                                " </xml>";
+
+        return String.format(imageTemplate, fromUserName,
+                toUserName, getMessageCreateTime(), map.getOrDefault("MediaId", ""));
     }
 
-    private static void handelEventMessage(Map<String, String> map) {
+    private static String handelEventMessage(Map<String, String> map, String fromUserName, String toUserName) {
+        logger.info("收到的事件消息：{}", JSONObject.toJSONString(map));
+        return "";
     }
 
-    private static void handelVideoMessage(Map<String, String> map) {
+    private static String handelVideoMessage(Map<String, String> map, String fromUserName, String toUserName) {
+        logger.info("收到的视频信息：{}", JSONObject.toJSONString(map));
+        return "";
     }
 
-    private static void handelLinkMessage(Map<String, String> map) {
+    private static String handelLinkMessage(Map<String, String> map, String fromUserName, String toUserName) {
+        logger.info("收到的连接信息：{}", JSONObject.toJSONString(map));
+        return "";
     }
 
-
-    private static void handelTextMessage(Map<String, String> map) {
+    /**
+     * <xml>
+     *     <ToUserName>< ![CDATA[toUser] ]></ToUserName>
+     *     <FromUserName>< ![CDATA[fromUser] ] </FromUserName>
+     *     <CreateTime>1348831860</CreateTime>
+     *     <MsgType>< ![CDATA[text] ]></MsgType>
+     *     <Content>< ![CDATA[this is a test] ]></Content>
+     * </xml>
+     * @param map map
+     * @param fromUserName fromUserName
+     * @param toUserName toUserName
+     * @return java.lang.String
+     * @author wuyifan
+     * @since 2018年3月7日
+     */
+    private static String handelTextMessage(Map<String, String> map, String fromUserName, String toUserName) {
+        logger.info("收到的文本信息：{}", JSONObject.toJSONString(map));
+        String textTemplate = "<xml>" +
+                                    "<ToUserName><![CDATA[%s]]></ToUserName>" +
+                                    "<FromUserName><![CDATA[%s]]></FromUserName>" +
+                                    "<CreateTime>%s</CreateTime>" +
+                                    "<MsgType><![CDATA[text]]></MsgType>" +
+                                    "<Content><![CDATA[%s]]></Content>" +
+                                "</xml>";
+        return String.format(textTemplate, fromUserName,
+                toUserName, getMessageCreateTime(), map.getOrDefault("Content", "不能解析改内容"));
     }
 
 
