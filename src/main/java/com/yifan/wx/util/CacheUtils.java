@@ -31,6 +31,7 @@ public class CacheUtils {
     }
 
     public void setAccessToken (String accessToken) {
+        logger.info("更新accessToken为 {}", accessToken);
         MAP.put("accessToken", accessToken);
     }
 

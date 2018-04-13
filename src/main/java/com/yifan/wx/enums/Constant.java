@@ -21,7 +21,7 @@ public interface Constant {
 
     String CODE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
 
-    String USER_INFO_URI = HOST + "/wxapi/userInfoByCode";
+    String USER_INFO_URI = HOST + "/wxapi/userInfoByOAuth";
 
     String OPEN_ID_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
 

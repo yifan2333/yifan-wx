@@ -26,7 +26,7 @@ public class WxApiController {
 
     private volatile static int times = 0;
 
-    @RequestMapping(name = "check", method = RequestMethod.POST)
+    @RequestMapping(value = "check", method = RequestMethod.POST)
     public String check(HttpServletRequest request) {
         return MessageUtils.handleWeChatMessage(request);
     }

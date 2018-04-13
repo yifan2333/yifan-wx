@@ -19,7 +19,7 @@ public class AccessTokenSchedule {
      * @author wuyifan
      * @since 2018年3月7日
      */
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0 0/1 * * ?")
     public void getAccessToken() {
         String accessToken = CacheUtils.getInstance().getAccessTokenHttp();
         CacheUtils.getInstance().setAccessToken(accessToken);
