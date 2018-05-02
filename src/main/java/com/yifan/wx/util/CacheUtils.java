@@ -7,8 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 自定义的缓存工具类
@@ -21,7 +21,7 @@ public class CacheUtils {
 
     private static CacheUtils ourInstance = new CacheUtils();
 
-    private final Map<String, Object> MAP = new HashMap<>();
+    private final Map<String, Object> MAP = new ConcurrentHashMap<>();
 
     public static CacheUtils getInstance() {
         return ourInstance;
