@@ -20,6 +20,7 @@ public class HtmlTest {
 
     public static void main(String[] args) {
         HtmlTest a = new HtmlTest();
+
         print(a.getA());
     }
 
