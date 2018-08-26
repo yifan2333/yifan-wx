@@ -37,38 +37,43 @@ public class ShuaXieZi {
 
         while (true){
 
-            // 请求商品信息
-            String jsonStr = HttpUtil.post("https://store.lining.com/ajax/goods_details.html", map);
-            // 解析商品信息， 判断商品是否有43码黑色的，有则给夏哥发邮件，没有就等10秒后再次请求
-            if (!StringUtils.isBlank(jsonStr)) {
-                JSONObject object = JSONObject.parseObject(jsonStr);
+            try {
+                // 请求商品信息
+                String jsonStr = HttpUtil.post("https://store.lining.com/ajax/goods_details.html", map);
+                // 解析商品信息， 判断商品是否有43码黑色的，有则给夏哥发邮件，没有就等10秒后再次请求
+                if (!StringUtils.isBlank(jsonStr)) {
+                    JSONObject object = JSONObject.parseObject(jsonStr);
 
-                if (Integer.valueOf(200).equals(object.getInteger("code"))) {
-                    JSONObject object1 = object.getJSONObject("data");
+                    if (Integer.valueOf(200).equals(object.getInteger("code"))) {
+                        JSONObject object1 = object.getJSONObject("data");
 
-                    String listStr = object1.getString("goodsData");
+                        String listStr = object1.getString("goodsData");
 
-                    List<GoodsModel> list = JSONArray.parseArray(listStr, GoodsModel.class);
+                        List<GoodsModel> list = JSONArray.parseArray(listStr, GoodsModel.class);
 
-                    list = list.stream().filter(GoodsModel::is43).collect(Collectors.toList());
+                        list = list.stream().filter(GoodsModel::is43).collect(Collectors.toList());
 
-                    System.out.println("请求了" + count++ + "次");
+                        System.out.println("请求了" + count++ + "次");
 
-                    if (list != null && list.size() == 1 && list.get(0).isSaled()){
-                        // 发送邮件
-                        // email.send("1252178193@qq.com", null, null, "43的鞋子有了", "43的鞋子有了", null);
-                        // 跳出循环，结束线程
-                        break;
-                    } else {
-                        System.out.println("43码的鞋还是没有啊");
+                        if (list != null && list.size() == 1 && list.get(0).isSaled()){
+                            // 发送邮件
+                            // email.send("1252178193@qq.com", null, null, "43的鞋子有了", "43的鞋子有了", null);
+                            System.out.println("43的鞋子有了");
+                            // 跳出循环，结束线程
+                            break;
+                        } else {
+                            System.out.println("43码的鞋还是没有啊");
+                        }
                     }
                 }
-            }
 
-            try {
-                // 线程停止十分钟
-                Thread.sleep(10 * 1000);
-            } catch (InterruptedException e) {
+                try {
+                    // 线程停止十秒钟
+                    Thread.sleep(10 * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

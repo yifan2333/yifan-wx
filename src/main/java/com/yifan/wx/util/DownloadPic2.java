@@ -21,7 +21,7 @@ public class DownloadPic2 {
 
 
             //new一个URL对象
-            URL url = new URL("http://down.699pic.com/photo/00001/8473.jpg_wh1920.jpg?_upt=29a724331525262567&_upd=0000018473_banner.jpg");
+            URL url = new URL("https://www.dulwich.org/images/logos/logo-crest.svg");
             //打开链接
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             //设置请求方式为"GET"
@@ -33,7 +33,7 @@ public class DownloadPic2 {
                 //得到图片的二进制数据，以二进制封装得到数据，具有通用性
                 byte[] data = readInputStream(inStream);
                 //new一个文件对象用来保存图片，默认保存当前工程根目录
-                File imageFile = new File("d:/500492.jpg");
+                File imageFile = new File("d:/logo-crest.svg");
                 //创建输出流
                 FileOutputStream outStream = new FileOutputStream(imageFile);
                 //写入数据

@@ -2,7 +2,6 @@ package com.yifan.wx.controller;
 
 import com.yifan.wx.model.OAuthInfo;
 import com.yifan.wx.util.CacheUtils;
-import com.yifan.wx.util.MessageUtils;
 import com.yifan.wx.util.SignUtils;
 import com.yifan.wx.util.WxHttpUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -28,7 +27,7 @@ public class WxApiController {
 
     @RequestMapping(value = "check", method = RequestMethod.POST)
     public String check(HttpServletRequest request) {
-        return MessageUtils.handleWeChatMessage(request);
+        return checkTokenAndGetEchostr(request);
     }
 
     private String checkTokenAndGetEchostr(HttpServletRequest request) {
