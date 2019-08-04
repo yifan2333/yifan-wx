@@ -42,6 +42,7 @@ public class CommonExceptionAdvice {
   @ExceptionHandler(MissingServletRequestParameterException.class)
   public ModelMap handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
     logger.error("缺少请求参数", e);
+
     return ResultUtils.makeModel(HttpStatus.BAD_REQUEST.value(), "required_parameter_is_not_present");
   }
 
